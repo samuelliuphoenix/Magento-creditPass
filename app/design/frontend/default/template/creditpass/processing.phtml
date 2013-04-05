@@ -1,0 +1,66 @@
+<?php 
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @copyright  Copyright (c) 2009 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+?>
+
+<?php if (Mage::helper('creditpass')->moduleActive()): ?>
+<script type="text/javascript">
+payment.onSave = function(paymentTransport){
+    // handle error, taken from payment.nextStep
+
+    if (paymentTransport && paymentTransport.responseText){
+        try{
+            response = eval('(' + paymentTransport.responseText + ')');
+        }
+        catch (e) {
+            response = {};
+        }
+    }
+    /*
+    * if there is an error in payment, need to show error message
+    */
+    if (response.error) {
+        if (response.fields) {
+            var fields = response.fields.split(',');
+            for (var i=0;i<fields.length;i++) {
+                var field = null;
+                if (field = $(fields[i])) {
+                    Validation.ajaxError(field, response.error);
+                }
+            }
+            return;
+        }
+        alert(response.error);
+        return;
+    }
+
+	checkout.setLoadWaiting('payment');
+	new Ajax.Request(
+		'<?php echo Mage::getUrl('creditpass/checkpayment/process', array('_secure'=>true)); ?>',
+		{
+			method:		'get',
+			onComplete:	function(transport) {
+							if (transport.responseText == 'PASSED') {
+								payment.nextStep(paymentTransport);
+							} else {
+								alert(transport.responseText);
+								shippingMethod.save();
+							}
+						}
+		});
+};
+</script>
+<?php endif; ?>

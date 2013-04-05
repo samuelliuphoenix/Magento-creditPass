@@ -1,0 +1,409 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category   Phoenix
+ * @package    Phoenix_Creditpass
+ * @copyright  Copyright (c) 2009 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+-->
+<config>
+   <sections>
+		<creditpass translate="label" module="creditpass">
+			<label>creditPass</label>
+			<tab>sales</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>980</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>0</show_in_website>
+			<show_in_store>0</show_in_store>
+			<groups>
+				<settings translate="label">
+					<label>creditPass Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<active translate="label,comment">
+							<label>Enabled</label>
+							<comment>Enables creditPass check in the shopping cart.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</active>
+						<cp_url translate="label,comment">
+							<label>creditPass URL</label>
+							<comment>Default: https://secure.creditpass.de/atgw/authorize.cfm</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</cp_url>
+						<auth_id translate="label">
+							<label>Authentication ID</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>3</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</auth_id>
+						<auth_pw translate="label">
+							<label>Authentication Password</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>4</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</auth_pw>
+						<live_mode translate="label,comment">
+							<label>Live Mode</label>
+							<comment>If set to Test Mode the creditPass response depends on last digit of total sum in the cart. (See creditPass documentation for details.)</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>5</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</live_mode>
+						<allowed_payment_methods translate="label,comment">
+							<label>Allowed Payment Methods</label>
+							<comment>Payment methods that are allways allowed to the customer even if creditPass returns a negative answer. Select the methods by clicking on them in the list while holding the CTRL button.</comment>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>creditpass/source_payment_methods</source_model>
+							<sort_order>6</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</allowed_payment_methods>
+ 						<exclude_groups_enable translate="label">
+							<label>Enable Group Filtering</label>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>7</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</exclude_groups_enable>
+						<exclude_groups translate="label,comment">
+							<label>Trustful User Groups</label>
+							<comment>Customers in the selected groups will be excluded from creditPass check.</comment>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>creditpass/source_customergroups</source_model>
+							<sort_order>8</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</exclude_groups>
+						<error_message translate="label,comment">
+							<label>Error Message</label>
+							<comment>Custom error message which is shown to the customer if creditPass returns a negative answer and the customer is forced to select another payment method again.</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>9</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</error_message>
+						<handle_error_code translate="label,comment">
+							<label>Handle Error As Positive Check</label>
+							<comment>If set to Yes, an error from creditPass will be handeled as if creditPass has validated the customer.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</handle_error_code>
+						<show_xml translate="label,comment">
+							<label>Show XML Communication In creditPass Comment</label>
+							<comment>If set to Yes, XML request and response will be shown in the creditPass comment.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<sort_order>11</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+						</show_xml>
+					</fields>
+				</settings>
+				<purchase_type_1 translate="label">
+					<label>Purchase Type 1</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>2</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_1>
+				<purchase_type_2 translate="label">
+					<label>Purchase Type 2</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>3</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_2>
+				<purchase_type_3 translate="label">
+					<label>Purchase Type 3</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>4</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_3>
+				<purchase_type_4 translate="label">
+					<label>Purchase Type 4</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>5</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_4>
+				<purchase_type_5 translate="label">
+					<label>Purchase Type 5</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>6</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_5>
+				<purchase_type_6 translate="label">
+					<label>Purchase Type 6</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>7</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_6>
+				<purchase_type_7 translate="label">
+					<label>Purchase Type 7</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>8</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_7>
+				<purchase_type_8 translate="label">
+					<label>Purchase Type 8</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>9</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_8>
+				<purchase_type_9 translate="label">
+					<label>Purchase Type 9</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>10</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<payment_method translate="label,comment">
+							<label>Payment method</label>
+							<comment>Choose payment method to check.</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_payment_allowedmethods</source_model>
+							<sort_order>1</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</payment_method>
+						<purchase_type_code translate="label,comment">
+							<label>Purchase Type Code</label>
+							<comment>Integer value (1, 2, etc.). For the customer type another integer value will be automaticlly appended (1 = guest, 2 = registered customer).</comment>
+							<frontend_type>text</frontend_type>
+							<sort_order>2</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+						</purchase_type_code>
+					</fields>
+				</purchase_type_9>
+			</groups>
+        </creditpass>
+    </sections>
+</config>

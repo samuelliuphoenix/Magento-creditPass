@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category   Phoenix
+ * @package    Phoenix_Creditpass
+ * @copyright  Copyright (c) 2009 Phoenix Medien GmbH & Co. KG (http://www.phoenix-medien.de)
+ */
+-->
+<config>
+	<modules>
+		<Phoenix_Creditpass>
+			<version>1.0.4</version>
+		</Phoenix_Creditpass>
+	</modules>
+	<global>
+		<models>
+			<creditpass>
+				<class>Phoenix_Creditpass_Model</class>
+			</creditpass>
+		</models>
+        <blocks>
+            <creditpass>
+                <class>Phoenix_Creditpass_Block</class>
+            </creditpass>
+            <checkout>
+                <rewrite>
+                    <onepage_payment_methods>Phoenix_Creditpass_Block_Payment_Methods</onepage_payment_methods>
+                    <multishipping_billing>Phoenix_Creditpass_Block_Multishipping_Billing</multishipping_billing>
+                </rewrite>
+            </checkout>
+        </blocks>
+		<events>
+			<sales_convert_quote_to_order>
+				<observers>
+					<creditpass_save_status>
+						<type>singleton</type>
+						<class>creditpass/saveOrderObserver</class>
+						<method>saveCreditpassStatus</method>
+					</creditpass_save_status>
+				</observers>
+			</sales_convert_quote_to_order>
+			<sales_order_place_after>
+				<observers>
+					<creditpass_send_notification>
+						<type>singleton</type>
+						<class>creditpass/saveOrderObserver</class>
+						<method>sendManualCheckNotification</method>
+					</creditpass_send_notification>
+				</observers>
+			</sales_order_place_after>
+		</events>
+		<helpers>
+			<creditpass>
+				<class>Phoenix_Creditpass_Helper</class>
+			</creditpass>
+		</helpers>
+		<resources>
+			<creditpass_setup>
+				<setup>
+					<module>Phoenix_Creditpass</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</creditpass_setup>
+			<creditpass_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</creditpass_write>
+			<creditpass_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</creditpass_read>
+		</resources>
+	</global>
+	<frontend>
+		<routers>
+			<creditpass>
+				<use>standard</use>
+				<args>
+					<module>Phoenix_Creditpass</module>
+					<frontName>creditpass</frontName>
+				</args>
+			</creditpass>
+		</routers>
+		<translate>
+			<modules>
+				<Phoenix_Creditpass>
+					<files>
+						<default>Phoenix_Creditpass.csv</default>
+					</files>
+				</Phoenix_Creditpass>
+			</modules>
+		</translate>
+		<layout>
+			<updates>
+				<creditpass>
+					<file>creditpass.xml</file>
+				</creditpass>
+			</updates>
+		</layout>
+	</frontend>
+	<adminhtml>
+		<translate>
+			<modules>
+				<Phoenix_Creditpass>
+					<files>
+						<default>Phoenix_Creditpass.csv</default>
+					</files>
+				</Phoenix_Creditpass>
+			</modules>
+		</translate>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<creditpass>
+											<title>Creditpass Settings</title>
+										</creditpass>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+	</adminhtml>
+	<default>
+		<creditpass>
+			<settings>
+				<active>0</active>
+				<cp_url>https://secure.creditpass.de/atgw/authorize.cfm</cp_url>
+				<live_mode>0</live_mode>
+				<exclude_groups_enable>0</exclude_groups_enable>
+				<error_message>The selected payment type is currently not available. Please select another one.</error_message>
+				<handle_error_code>0</handle_error_code>
+			</settings>
+		</creditpass>
+	</default>
+</config>
