@@ -1,0 +1,6 @@
+app/code/community/Phoenix/Creditpass/* app/code/community/Phoenix/Creditpass/
+app/design/frontend/default/layout/* app/design/frontend/default/layout/
+app/design/frontend/default/template/creditpass/* app/design/frontend/default/template/creditpass/
+app/etc/modules/Phoenix_Creditpass.xml app/etc/modules/Phoenix_Creditpass.xml
+app/locale/de_DE/Phoenix_Creditpass.csv app/locale/de_DE/Phoenix_Creditpass.csv
+app/locale/en_US/Phoenix_Creditpass.csv app/locale/en_US/Phoenix_Creditpass.csv
