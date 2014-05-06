@@ -95,12 +95,22 @@ class Phoenix_Creditpass_Helper_Data extends Mage_Core_Helper_Abstract
 				// add additional information for supported payment methods
 			switch ($payment->getMethod()) {
 				case 'debit':
-						// fix decrypt but in extension
-					$blz = (strpos($paymentInfo->getAccountBLZ(), '=') !== false) ? $paymentInfo->decrypt($paymentInfo->decrypt($paymentInfo->getAccountBLZ())) : $paymentInfo->getAccountBLZ();
-					$konto = (strpos($paymentInfo->getAccountNumber(), '=') !== false) ? $paymentInfo->decrypt($paymentInfo->decrypt($paymentInfo->getAccountNumber())) : $paymentInfo->getAccountNumber();
-
-					$queryobj->addChild('BLZ', $blz);
-					$queryobj->addChild('KONTONR', $konto);
+					// fix decrypt but in extension
+					
+					// IBAN fix                                                                                                                                                                                           
+					$ibanTemp = $paymentInfo->getAccountIban();                                                                                                                                                           
+					                                                                                                                                                                                                      
+					if(empty($ibanTemp)){                                                                                                                                                                                 
+					    $blz = (strpos($paymentInfo->getAccountBLZ(), '=') !== false) ? $paymentInfo->decrypt($paymentInfo->decrypt($paymentInfo->getAccountBLZ())) : $paymentInfo->getAccountBLZ();                      
+					    $konto = (strpos($paymentInfo->getAccountNumber(), '=') !== false) ? $paymentInfo->decrypt($paymentInfo->decrypt($paymentInfo->getAccountNumber())) : $paymentInfo->getAccountNumber();           
+					                                                                                                                                                                                                      
+					    $queryobj->addChild('BLZ', $blz);                                                                                                                                                                 
+					    $queryobj->addChild('KONTONR', $konto);                                                                                                                                                           
+					} else {                                                                                                                                                                                              
+					    $iban = (strpos($paymentInfo->getAccountIban(), '=') !== false) ? $paymentInfo->decrypt($paymentInfo->decrypt($paymentInfo->getAccountIban())) : $paymentInfo->getAccountIban();                  
+					                                                                                                                                                                                                      
+					    $queryobj->addChild('IBAN', $iban);                                                                                                                                                               
+					}                                                                                                                                                                                                     
 					break;
 				case 'ccsave':
 					$queryobj->addChild('PAN', $payment->getCcNumber());
